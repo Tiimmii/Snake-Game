@@ -6,8 +6,8 @@ import random
 pygame.init()
 
 #setting window height and width
-window_width = 600
-window_height = 800
+window_width = 480
+window_height = 720
 
 # defining colors
 black = pygame.Color(0, 0, 0)
@@ -22,8 +22,17 @@ pygame.display.set_caption("SNAKE GAME BY TIMMI")
 #setting timer
 timer = pygame.time.Clock()
 
-snake_block = 10
 snake_speed = 10
 
-display_font = pygame.font.SysFont("arial",30,"bold")
-score_font = pygame.font.SysFont("arial",45,"bold")
+#default position of the snake
+snake_position = [100, 50]
+#defining first four blocks of the snake body
+snake_body = [[100, 50],
+              [90, 50],
+              [80, 50],
+              [70, 50]]
+#the initial food position should apear randomly anywhere within the window_width and window_height
+food_position = [random.randrange(1, (window_width//10))*10,
+                 random.randrange(1, (window_height//10))*10
+                 ]
+food_spawn = False #determines whether food should spawn or not
