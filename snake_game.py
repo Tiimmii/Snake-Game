@@ -36,3 +36,8 @@ food_position = [random.randrange(1, (window_width//10))*10,
                  random.randrange(1, (window_height//10))*10
                  ]
 food_spawn = False #determines whether food should spawn or not
+score = 0 #initial score
+
+# setting default snake direction towards left
+direction = 'LEFT'
+change_to = direction
