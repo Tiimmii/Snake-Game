@@ -17,7 +17,7 @@ green = pygame.Color(0, 255, 0)
 blue = pygame.Color(0, 0, 255)
 
 window = pygame.display.set_mode((window_width, window_height))
-pygame.display.set_caption("SNAKE GAME BY TIMMI")
+pygame.display.set_caption("SNAKE GAME BY TIMMII")
 
 #setting timer
 timer = pygame.time.Clock()
