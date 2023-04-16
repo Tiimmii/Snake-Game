@@ -96,6 +96,18 @@ while True:
         direction = "RIGHT"
     
     #snake growing mechanism
+    if snake_position[0] == food_position[0] or snake_position[1] == food_position[1]:
+        food_spawn = True
+        score+=1
+    else:
+        snake_body.pop()
+
+    if food_spawn == True:
+        food_position = [random.randrange(1, (window_width//10))*10,
+                        random.randrange(1, (window_height//10))*10
+                        ]
+        food_spawn = False
+
     
 
 
