@@ -45,14 +45,14 @@ change_to = direction
 #displaying the scores
 def show_scores(font, size, color):
     score_font = pygame.font.SysFont(font, size)
-    score_surface = score_font.render('Your score is: '+str(score), True, color)
+    score_surface = score_font.render('Your score is: '+str(score)+"\n press Q to quit", True, color)
     score_surface_rect = score_surface.get_rect()
     window.blit(score_surface, score_surface_rect)
 
 #on game over
 def game_over():
     font = pygame.font.SysFont("arial", 50)
-    font_surface = font.render("Score: "+str(score), True, white)
+    font_surface = font.render("You snooze you loose your Score: "+str(score), True, white)
     font_surface_rect = font_surface.get_rect()
     
     #setting the position of the rectangle to the middle
@@ -67,3 +67,37 @@ def game_over():
     pygame.quit()
     #quit the program
     quit()
+
+#if key Q is pressed game should automatically quit
+def quit_game():
+    pygame.quit()
+    quit()
+
+while True:
+    for event in pygame.event:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                change_to = "UP"
+            if event.key == pygame.K_DOWN:
+                change_to = "DOWN"
+            if event.key == pygame.K_LEFT:
+                change_to ="LEFT"
+            if event.key == pygame.K_RIGHT:
+                change_to = "RIGHT"
+    
+    #To prevent snake from moving in the opposite direction
+    if change_to == "UP" and direction != "DOWN":
+        direction = "UP"
+    if change_to == "DOWN" and direction != "UP":
+        direction = "DOWN"
+    if change_to == "LEFT" and direction != "RIGHT":
+        direction = "LEFT"
+    if change_to == "RIGHT" and direction != "LEFT":
+        direction = "RIGHT"
+    
+    #snake growing mechanism
+    
+
+
+
+
