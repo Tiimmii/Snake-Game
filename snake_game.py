@@ -76,6 +76,8 @@ def quit_game():
 while True:
     for event in pygame.event:
         if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_q:
+                quit_game()
             if event.key == pygame.K_UP:
                 change_to = "UP"
             if event.key == pygame.K_DOWN:
@@ -106,10 +108,15 @@ while True:
         food_position = [random.randrange(1, (window_width//10))*10,
                         random.randrange(1, (window_height//10))*10
                         ]
-        food_spawn = False
-
+    food_spawn = False
+    window.fill(black)
+    #drawing the snake and food
+    #drawing the snake
+    for position in snake_position:
+        pygame.draw.rect(window, white, pygame.Rect(position[0], position[1], 10, 10))
+    #drawing the food
+    pygame.draw.rect(window, white, pygame.Rect(food_position[0], food_position[1], 10, 10))
     
-
 
 
 
