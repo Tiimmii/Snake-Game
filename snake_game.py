@@ -2,12 +2,8 @@ import pygame
 import time
 import random
 
-#initializing pygame
-pygame.init()
-
-#setting window height and width
-window_width = 480
-window_height = 720
+window_width = 720
+window_height = 480
 
 # defining colors
 black = pygame.Color(0, 0, 0)
@@ -16,13 +12,18 @@ red = pygame.Color(255, 0, 0)
 green = pygame.Color(0, 255, 0)
 blue = pygame.Color(0, 0, 255)
 
+#initializing pygame
+pygame.init()
+
+#setting window height and width
+
 window = pygame.display.set_mode((window_width, window_height))
 pygame.display.set_caption("SNAKE GAME BY TIMMII")
 
 #setting timer
 timer = pygame.time.Clock()
 
-snake_speed = 10
+snake_speed = 15
 
 #default position of the snake
 snake_position = [100, 50]
@@ -35,24 +36,24 @@ snake_body = [[100, 50],
 food_position = [random.randrange(1, (window_width//10))*10,
                  random.randrange(1, (window_height//10))*10
                  ]
-food_spawn = False #determines whether food should spawn or not
+food_spawn = True #determines whether food should spawn or not
 score = 0 #initial score
 
-# setting default snake direction towards left
-direction = 'LEFT'
+# setting default snake direction towards right
+direction = 'RIGHT'
 change_to = direction
 
 #displaying the scores
 def show_scores(font, size, color):
     score_font = pygame.font.SysFont(font, size)
-    score_surface = score_font.render('Your score is: '+str(score)+"\n press Q to quit", True, color)
+    score_surface = score_font.render('Your score is: '+str(score)+" press Q to quit", True, color)
     score_surface_rect = score_surface.get_rect()
     window.blit(score_surface, score_surface_rect)
 
 #on game over
 def game_over():
     font = pygame.font.SysFont("arial", 50)
-    font_surface = font.render("You snooze you loose\n your Score: "+str(score), True, red)
+    font_surface = font.render("You snooze you loose Score: "+str(score), True, red)
     font_surface_rect = font_surface.get_rect()
     
     #setting the position of the rectangle to the middle
@@ -62,7 +63,7 @@ def game_over():
     pygame.display.flip()
 
     #quit the program after five seconds
-    time.sleep(5)
+    time.sleep(2)
     #quit pygame
     pygame.quit()
     #quit the program
@@ -110,18 +111,17 @@ while True:
     
     #snake growing mechanism
     snake_body.insert(0, list(snake_position))
-    if snake_position[0] == food_position[0] or snake_position[1] == food_position[1]:
-        food_spawn = True
+    if snake_position[0] == food_position[0] and snake_position[1] == food_position[1]:
         score+=1
-        snake_speed+=5
+        food_spawn = False
+        snake_speed+=1
     else:
         snake_body.pop()
 
-    if food_spawn == True:
-        food_position = [random.randrange(1, (window_width//10))*10,
-                        random.randrange(1, (window_height//10))*10
-                        ]
-    food_spawn = False
+    if not food_spawn:
+        food_position = [ random.randrange(1, (window_width//10))*10,
+                          random.randrange(1, (window_height//10))*10]
+    food_spawn = True
     window.fill(black)
     #drawing the snake and food
     #drawing the snake
@@ -129,10 +129,11 @@ while True:
         pygame.draw.rect(window, green, pygame.Rect(position[0], position[1], 10, 10))
     #drawing the food
     pygame.draw.rect(window, white, pygame.Rect(food_position[0], food_position[1], 10, 10))
+    
     #game over conditions
-    if snake_position[0]<0 or snake_position[0]>window_width-10:
+    if snake_position[0] < 0 or snake_position[0] >=window_width:
         game_over()
-    if snake_position[1]<0 or snake_position[1]> window_width-10:
+    if snake_position[1] < 0 or snake_position[1] >=window_height:
         game_over()
     
     #snake touching its body
