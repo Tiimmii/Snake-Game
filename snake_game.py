@@ -52,11 +52,11 @@ def show_scores(font, size, color):
 #on game over
 def game_over():
     font = pygame.font.SysFont("arial", 50)
-    font_surface = font.render("You snooze you loose your Score: "+str(score), True, red)
+    font_surface = font.render("You snooze you loose\n your Score: "+str(score), True, red)
     font_surface_rect = font_surface.get_rect()
     
     #setting the position of the rectangle to the middle
-    font_surface_rect.midtop(window_width/2, window_height/4)
+    font_surface_rect.midtop = (window_width/2, window_height/4)
 
     window.blit(font_surface, font_surface_rect)
     pygame.display.flip()
@@ -74,7 +74,7 @@ def quit_game():
     quit()
 
 while True:
-    for event in pygame.event:
+    for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
                 quit_game()
@@ -125,14 +125,14 @@ while True:
     window.fill(black)
     #drawing the snake and food
     #drawing the snake
-    for position in snake_position:
+    for position in snake_body:
         pygame.draw.rect(window, green, pygame.Rect(position[0], position[1], 10, 10))
     #drawing the food
     pygame.draw.rect(window, white, pygame.Rect(food_position[0], food_position[1], 10, 10))
     #game over conditions
-    if snake_position[0]<0 or snake_position[0]>= window_width:
+    if snake_position[0]<0 or snake_position[0]>window_width-10:
         game_over()
-    if snake_position[1]<0 or snake_position[1]>= window_width:
+    if snake_position[1]<0 or snake_position[1]> window_width-10:
         game_over()
     
     #snake touching its body
