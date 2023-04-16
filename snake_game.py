@@ -52,7 +52,7 @@ def show_scores(font, size, color):
 #on game over
 def game_over():
     font = pygame.font.SysFont("arial", 50)
-    font_surface = font.render("You snooze you loose your Score: "+str(score), True, white)
+    font_surface = font.render("You snooze you loose your Score: "+str(score), True, red)
     font_surface_rect = font_surface.get_rect()
     
     #setting the position of the rectangle to the middle
@@ -96,11 +96,24 @@ while True:
         direction = "LEFT"
     if change_to == "RIGHT" and direction != "LEFT":
         direction = "RIGHT"
+
+    #moving the snake
+    if direction == 'UP':
+        snake_position[1] -= 10
+    if direction == 'DOWN':
+        snake_position[1] += 10
+    if direction == 'LEFT':
+        snake_position[0] -= 10
+    if direction == 'RIGHT':
+        snake_position[0] += 10
+ 
     
     #snake growing mechanism
+    snake_body.insert(0, list(snake_position))
     if snake_position[0] == food_position[0] or snake_position[1] == food_position[1]:
         food_spawn = True
         score+=1
+        snake_speed+=5
     else:
         snake_body.pop()
 
@@ -113,9 +126,28 @@ while True:
     #drawing the snake and food
     #drawing the snake
     for position in snake_position:
-        pygame.draw.rect(window, white, pygame.Rect(position[0], position[1], 10, 10))
+        pygame.draw.rect(window, green, pygame.Rect(position[0], position[1], 10, 10))
     #drawing the food
     pygame.draw.rect(window, white, pygame.Rect(food_position[0], food_position[1], 10, 10))
+    #game over conditions
+    if snake_position[0]<0 or snake_position[0]>= window_width:
+        game_over()
+    if snake_position[1]<0 or snake_position[1]>= window_width:
+        game_over()
+    
+    #snake touching its body
+    for pos in snake_body[1:]:
+        if pos[0] == snake_position[0] and pos[1] == snake_position[1]:
+            game_over()
+    
+    #displaying the score continously
+    show_scores("times new roman", 20, blue)
+    #refreshing the game
+    pygame.display.update()
+    #fps timer
+    timer.tick(snake_speed)
+    
+    
     
 
 
