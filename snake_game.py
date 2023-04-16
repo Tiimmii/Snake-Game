@@ -45,6 +45,25 @@ change_to = direction
 #displaying the scores
 def show_scores(font, size, color):
     score_font = pygame.font.SysFont(font, size)
-    score_surface = score_font.render('Your score is: '+score, True, color)
+    score_surface = score_font.render('Your score is: '+str(score), True, color)
     score_surface_rect = score_surface.get_rect()
     window.blit(score_surface, score_surface_rect)
+
+#on game over
+def game_over():
+    font = pygame.font.SysFont("arial", 50)
+    font_surface = font.render("Score: "+str(score), True, white)
+    font_surface_rect = font_surface.get_rect()
+    
+    #setting the position of the rectangle to the middle
+    font_surface_rect.midtop(window_width/2, window_height/4)
+
+    window.blit(font_surface, font_surface_rect)
+    pygame.display.flip()
+
+    #quit the program after five seconds
+    time.sleep(5)
+    #quit pygame
+    pygame.quit()
+    #quit the program
+    quit()
