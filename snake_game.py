@@ -36,7 +36,7 @@ snake_body = [[100, 50],
 food_position = [random.randrange(1, (window_width//10))*10,
                  random.randrange(1, (window_height//10))*10
                  ]
-food_spawn = True #determines whether food should spawn or not
+food_spawn = False #determines whether food should spawn or not
 score = 0 #initial score
 
 # setting default snake direction towards right
@@ -46,15 +46,19 @@ change_to = direction
 #displaying the scores
 def show_scores(font, size, color):
     score_font = pygame.font.SysFont(font, size)
-    score_surface = score_font.render('Your score is: '+str(score)+" press Q to quit", True, color)
+    score_surface = score_font.render('Your score is: '+str(score)+"         press Q to quit", True, color)
     score_surface_rect = score_surface.get_rect()
     window.blit(score_surface, score_surface_rect)
 
 #on game over
 def game_over():
-    font = pygame.font.SysFont("arial", 50)
-    font_surface = font.render("You snooze you loose Score: "+str(score), True, red)
-    font_surface_rect = font_surface.get_rect()
+    file = open("highest-score.txt", "r+")
+    for line in file:
+        if score > int(line):
+            line = score
+        font = pygame.font.SysFont("arial", 20)
+        font_surface = font.render("You snooze you loose Score: "+str(score)+" high score: "+str(line), True, red)
+        font_surface_rect = font_surface.get_rect()
     
     #setting the position of the rectangle to the middle
     font_surface_rect.midtop = (window_width/2, window_height/4)
@@ -113,15 +117,15 @@ while True:
     snake_body.insert(0, list(snake_position))
     if snake_position[0] == food_position[0] and snake_position[1] == food_position[1]:
         score+=1
-        food_spawn = False
+        food_spawn = True
         snake_speed+=1
     else:
         snake_body.pop()
 
-    if not food_spawn:
+    if food_spawn:
         food_position = [ random.randrange(1, (window_width//10))*10,
                           random.randrange(1, (window_height//10))*10]
-    food_spawn = True
+    food_spawn = False
     window.fill(black)
     #drawing the snake and food
     #drawing the snake
@@ -147,6 +151,7 @@ while True:
     pygame.display.update()
     #fps timer
     timer.tick(snake_speed)
+
     
     
     
