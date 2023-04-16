@@ -41,3 +41,10 @@ score = 0 #initial score
 # setting default snake direction towards left
 direction = 'LEFT'
 change_to = direction
+
+#displaying the scores
+def show_scores(font, size, color):
+    score_font = pygame.font.SysFont(font, size)
+    score_surface = score_font.render('Your score is: '+score, True, color)
+    score_surface_rect = score_surface.get_rect()
+    window.blit(score_surface, score_surface_rect)
