@@ -52,13 +52,9 @@ def show_scores(font, size, color):
 
 #on game over
 def game_over():
-    file = open("highest-score.txt", "r+")
-    for line in file:
-        if score > int(line):
-            line = score
-        font = pygame.font.SysFont("arial", 20)
-        font_surface = font.render("You snooze you loose Score: "+str(score)+" high score: "+str(line), True, red)
-        font_surface_rect = font_surface.get_rect()
+    font = pygame.font.SysFont("arial", 20)
+    font_surface = font.render("You snooze you loose Score: "+str(score), True, red)
+    font_surface_rect = font_surface.get_rect()
     
     #setting the position of the rectangle to the middle
     font_surface_rect.midtop = (window_width/2, window_height/4)
